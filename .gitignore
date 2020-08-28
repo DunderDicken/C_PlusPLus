@@ -32,3 +32,5 @@
 *.app
 /HelloWorld/.vs/HelloWorld/v16/Browse.VC.db
 /HelloWorld/.vs/HelloWorld/v16/Browse.VC.opendb
+/FizzBuzz/.vs/FizzBuzz/v16/Browse.VC.db
+/FizzBuzz/.vs/FizzBuzz/v16/Browse.VC.opendb
