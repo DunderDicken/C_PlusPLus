@@ -3,10 +3,17 @@
 
 #include <iostream>
 
+int UPPER = 10;
+
 int main()
 {
+	system("pause");
 	
-    std::cout << "Hello World!\n";
+	for (int i = 0; i < UPPER; ++i)
+	{
+		std::cout << i+1 << " Hello World!\n";
+	}
+    
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
