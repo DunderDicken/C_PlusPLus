@@ -34,3 +34,5 @@
 /HelloWorld/.vs/HelloWorld/v16/Browse.VC.opendb
 /FizzBuzz/.vs/FizzBuzz/v16/Browse.VC.db
 /FizzBuzz/.vs/FizzBuzz/v16/Browse.VC.opendb
+/QuickBits/.vs/QuickBits/v16/Browse.VC.db
+*.opendb

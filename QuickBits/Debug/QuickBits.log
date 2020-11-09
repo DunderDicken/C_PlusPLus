@@ -1,0 +1,3 @@
+﻿  QuickBits.cpp
+C:\Users\dickk\Documents\Repo VS code\C++\QuickBits\QuickBits.cpp(15,7): warning C4101: 'word2': unreferenced local variable
+  QuickBits.vcxproj -> C:\Users\dickk\Documents\Repo VS code\C++\QuickBits\Debug\QuickBits.exe
