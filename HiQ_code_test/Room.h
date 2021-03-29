@@ -5,19 +5,19 @@
 #pragma once
 class Room
 {
-public:
-	Room(int w, int h)
-	{
-		width = w;
-		height = h;
-	};
-	
-	Room() = default;
-	
-	int getWidth() { return width; }
-	int getHeight() { return height; }
-	
+
 private:
-	int width, height;
+	int const width;
+	int const height;
+
+public:
+	Room(int width, int height);
+	Room();
+	~Room();
+
+	int  getWidth() const { return width; }
+	int  getHeight() const { return height; }
+
+
 };
 

@@ -90,6 +90,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,13 +150,13 @@
   <ItemGroup>
     <ClCompile Include="Car.cpp" />
     <ClCompile Include="HiQ_code_test.cpp" />
-    <ClCompile Include="Monster_truck.cpp" />
+    <ClCompile Include="MonsterTruck.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="Simulation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Car.h" />
-    <ClInclude Include="Monster_truck.h" />
+    <ClInclude Include="MonsterTruck.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="Simulation.h" />
   </ItemGroup>

@@ -3,13 +3,32 @@
 #include <iostream>
 #include <sstream>
 
-using namespace std;
+using std::cout;
+using std::cin;
+using std::endl;
+using std::string;
+using std::istringstream;
+using std::getline;
 
 Simulation::Simulation(Car car, Room room)
 {
-	car_ = car;
-	room_ = room;
+	Simulation::car = std::make_unique<Car>(car);
+	Simulation::room = std::make_unique<Room>(room);
+
+	cout << "Constructing Simulation" << endl;
+
 }
+
+Simulation::Simulation() 
+{
+	cout << "Constructing Simulation without args" << endl;
+}
+
+Simulation::~Simulation()
+{
+	cout << "Deconstructing Simulation" << endl;
+}
+
 
 void Simulation::initSim()
 {
@@ -28,7 +47,7 @@ void Simulation::initRoom()
 
 	if (iss >> w >> h)
 	{
-		room_ = Room(w, h);
+		setRoom(Room(w, h));
 	}
 	else {
 		cout << "ERROR, wrong input \n";
@@ -48,7 +67,7 @@ void Simulation::initCar()
 
 	if (iss >> x >> y >> heading)
 	{
-		car_ = Monster_truck(x, y, heading);
+		setCar(MonsterTruck(x, y, heading));
 	}
 	else {
 		cout << "ERROR, wrong input \n";
@@ -65,19 +84,19 @@ void Simulation::initCommands()
 		input = getchar();
 		if (isValidCommand(input))
 		{
-			commands_.push(input); //Add command to queue
+			commands.push(input); //Add command to queue
 		}
 		else if (input != '\n')
 		{
 			cout << "ERROR, -" << input << "- is not a valid command \n";
 			/*Clear queue*/
-			queue<char> empty;
-			std::swap(commands_, empty);
+			std::queue<char> empty;
+			std::swap(commands, empty);
 			break;
 		}
 	} while (input != '\n' && input != ' ') ;
 
-	if (commands_.empty()) //If empty, run again
+	if (commands.empty()) //If empty, run again
 	{
 		initCommands();
 	}
@@ -85,23 +104,23 @@ void Simulation::initCommands()
 
 void Simulation::startSim()
 {
-	int steps = commands_.size();
+	int steps = commands.size();
 
 	for (int i = 0; i < steps; i++)
 	{
-		char command = commands_.front();
-		commands_.pop();
+		char command = commands.front();
+		commands.pop();
 		cout << "Running command: "<< command << ". Step " << i+1 << "/" << steps << " \n";
 
 		drive(command);
 		if(didWeCrash())
 		{
-			cout << " CRASH! The car hit the wall At step " << i+1 << ". Position X : " << car_.getPos().first << ", Y : " <<car_.getPos().second << ", heading : " << car_.getHeading() << "\n";
+			cout << " CRASH! The car hit the wall At step " << i+1 << ". Position X : " << car->getPos().first << ", Y : " << car->getPos().second << ", heading : " << car->getHeading() << "\n";
 			getchar();
 			return;
 		}
 	}
-	cout << "Simulation successful, car currently at position X:" << car_.getPos().first << ", Y:" <<car_.getPos().second << ", heading:" << car_.getHeading() << "\n";
+	cout << "Simulation successful, car currently at position X:" << car->getPos().first << ", Y:" << car->getPos().second << ", heading:" << car->getHeading() << "\n";
 	
 }
 
@@ -120,67 +139,87 @@ void Simulation::drive(char c)
 
 void Simulation::driveFwd()
 {
-	int currentX = car_.getPos().first;
-	int currentY = car_.getPos().second;
+	int currentX = car->getPos().first;
+	int currentY = car->getPos().second;
 	
-	switch (car_.getHeading())
+	switch (car->getHeading())
 	{
-	case 'N': currentY += car_.getFwdSpeed(); break;
-	case 'S': currentY -= car_.getFwdSpeed(); break;
-	case 'W': currentX -= car_.getFwdSpeed(); break;
-	case 'E': currentX += car_.getFwdSpeed(); break;
+	case 'N': currentY += car->getFwdSpeed(); break;
+	case 'S': currentY -= car->getFwdSpeed(); break;
+	case 'W': currentX -= car->getFwdSpeed(); break;
+	case 'E': currentX += car->getFwdSpeed(); break;
 	default:			   break;
 	}
 
-	car_.setPos(currentX, currentY);
+	car->setPos(currentX, currentY);
 }
 
 void Simulation::driveBwd()
 {
-	int currentX = car_.getPos().first;
-	int currentY = car_.getPos().second;
+	int currentX = car->getPos().first;
+	int currentY = car->getPos().second;
 
-	switch (car_.getHeading())
+	switch (car->getHeading())
 	{
-	case 'N': currentY -= car_.getBwdSpeed(); break;
-	case 'S': currentY += car_.getBwdSpeed(); break;
-	case 'W': currentX += car_.getBwdSpeed(); break;
-	case 'E': currentX -= car_.getBwdSpeed(); break;
+	case 'N': currentY -= car->getBwdSpeed(); break;
+	case 'S': currentY += car->getBwdSpeed(); break;
+	case 'W': currentX += car->getBwdSpeed(); break;
+	case 'E': currentX -= car->getBwdSpeed(); break;
 	default:			   break;
 	}
 
-	car_.setPos(currentX, currentY);
+	car->setPos(currentX, currentY);
 }
 
 void Simulation::turnLeft()
 {
-	switch (car_.getHeading())
+	switch (car->getHeading())
 	{
-	case 'N': car_.setHeading('W'); break;
-	case 'S': car_.setHeading('E'); break;
-	case 'W': car_.setHeading('S'); break;
-	case 'E': car_.setHeading('N'); break;
+	case 'N': car->setHeading('W'); break;
+	case 'S': car->setHeading('E'); break;
+	case 'W': car->setHeading('S'); break;
+	case 'E': car->setHeading('N'); break;
 	default:			   break;
 	}
 }
 
 void Simulation::turnRight()
 {
-	switch (car_.getHeading())
+	switch (car->getHeading())
 	{
-	case 'N': car_.setHeading('E'); break;
-	case 'S': car_.setHeading('W'); break;
-	case 'W': car_.setHeading('N'); break;
-	case 'E': car_.setHeading('S'); break;
+	case 'N': car->setHeading('E'); break;
+	case 'S': car->setHeading('W'); break;
+	case 'W': car->setHeading('N'); break;
+	case 'E': car->setHeading('S'); break;
 	default:			   break;
 	}
 	
 }
 
+void Simulation::setCar(Car const& c)
+{
+	Simulation::car = std::make_unique<Car>(c);
+}
+
+void Simulation::setRoom(Room const& r)
+{
+	Simulation::room = std::make_unique<Room>(r);
+}
+
+Car Simulation::getCar()
+{
+	return *car;
+}
+
+Room Simulation::getRoom()
+{
+	return *room;
+}
+
 /* Checks if command 'c' is a valid command, returns true if it is valid */
 bool Simulation::isValidCommand(char c)
 {
-	if (c != 'F' && c != 'B' && c != 'L' && c != 'R')
+	if (c != 'F' && c != 'B' && c != 'L' && c != 'R') //Add lower case
 		return false;
 	else
 		return true;
@@ -190,14 +229,14 @@ bool Simulation::isValidCommand(char c)
 bool Simulation::didWeCrash()
 {
 	bool crash = false;
-	int currentX = car_.getPos().first;
-	int currentY = car_.getPos().second;
+	int currentX = car->getPos().first;
+	int currentY = car->getPos().second;
 	
-	if (currentX < 0 || currentX >= room_.getWidth())
+	if (currentX < 0 || currentX >= room->getWidth())
 	{
 		crash = true;
 	}
-	if (currentY < 0 || currentY >= room_.getHeight())
+	if (currentY < 0 || currentY >= room->getHeight())
 	{
 		crash = true;
 	}

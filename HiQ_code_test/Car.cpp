@@ -1,33 +1,34 @@
 #include "Car.h"
+#include <iostream>
+using std::cout;
 
-
-Car::Car(){}
-
-
-Car::Car(int area, int fwdSpeed, int bwdSpeed, int turningRatio)
+Car::Car(int a, int fwdS, int bwdS, int x, int y, char h):
+	area(area),fwdSpeed(fwdSpeed), bwdSpeed(bwdSpeed), 
+	xPos(x), yPos(y), heading(h)
 {
-	area_ = area;
-	fwdSpeed_ = fwdSpeed; 
-	bwdSpeed_= bwdSpeed; 
-	turningRatio_ = turningRatio; 
-	xPos_ = 0;
-	yPos_ = 0;
+	cout << "Constructing Car with variables" << std::endl;
+}
+
+Car::Car(): area(0), fwdSpeed(0), bwdSpeed(0),xPos(0),yPos(0),heading(' ')
+{
+	cout << "Constructing Car" << std::endl;
+}
+
+Car::~Car()
+{
+	cout << "Destructing Car" << std::endl;
 }
 
 void Car::setPos(int xPos, int yPos)
 {
-	xPos_ = xPos;
-	yPos_ = yPos;
+	Car::xPos = xPos >= 0 ? xPos : 0;
+	Car::yPos = yPos >= 0 ? yPos : 0;
 }
 
-void Car::setHeading(char heading)
-{
-	heading_ = heading;
-}
 
 std::pair<int, int> Car::getPos()
 {
-	return { xPos_, yPos_ };
+	return { Car::xPos, Car::yPos };
 }
 
 

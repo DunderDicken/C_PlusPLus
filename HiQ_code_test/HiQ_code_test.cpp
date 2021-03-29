@@ -13,10 +13,13 @@
 int main()
 {
 
-	Simulation* s = new Simulation();
-	s->initSim();
-	s->startSim();
+	Simulation S1;
+	S1.initSim();
+	S1.startSim();
+
 	
 	getchar();
+	return 0;
+
 }
 

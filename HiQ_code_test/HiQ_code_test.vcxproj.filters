@@ -24,7 +24,7 @@
     <ClCompile Include="Car.cpp">
       <Filter>Source Files\sources</Filter>
     </ClCompile>
-    <ClCompile Include="Monster_truck.cpp">
+    <ClCompile Include="MonsterTruck.cpp">
       <Filter>Source Files\sources</Filter>
     </ClCompile>
     <ClCompile Include="Room.cpp">
@@ -41,7 +41,7 @@
     <ClInclude Include="Car.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Monster_truck.h">
+    <ClInclude Include="MonsterTruck.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Simulation.h">

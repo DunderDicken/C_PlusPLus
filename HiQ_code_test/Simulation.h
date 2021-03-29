@@ -7,33 +7,46 @@
 
 #include "Room.h"
 #include  "Car.h"
-#include "Monster_truck.h"
+#include "MonsterTruck.h"
+#include <memory>
+
 
 class Simulation
 {
 public:
 	Simulation(Car car, Room room);
-	Simulation() = default;
+	Simulation();
+	~Simulation();
 
 	void initSim();
+	void startSim();
+	
+	void setCar(Car const& c);
+	void setRoom(Room const & r);
+	Car getCar();
+	Room getRoom();
+
+	
+private:
+	std::unique_ptr<Car> car;
+	std::unique_ptr<Room> room;
+	std::queue<char> commands;
+
+
 	void initRoom();
 	void initCar();
 	void initCommands();
-	void startSim();
 	
-	void drive(char c); 
+
+	void drive(char c);
 	void driveFwd();
 	void driveBwd();
 	void turnLeft();
 	void turnRight();
-	
+
+	//Helpers
 	bool isValidCommand(char c);
 	bool didWeCrash();
-	
-protected:
-	Car car_;
-	Room room_;
-	std::queue<char> commands_;
 };
 
 

@@ -5,26 +5,29 @@
 
 class Car // Base class
 {
+
+private:
+	int const area; //Area of Car in simulation
+	int const fwdSpeed; //Number of meters/step forward
+	int const bwdSpeed; //Number of meters/step backwards
+	int xPos, yPos; //Cars position in room
+	char heading; //Orientation of the car
+
 public:
-	Car(int area, int fwdSpeed, int bwdSpeed, int turningRatio);
+	Car(int area, int fwdSpeed, int bwdSpeed, int x, int y, char h);
 	Car();
+	virtual ~Car();
 
-	void setPos(int xPos, int yPos);
-	void setHeading(char heading);
-	
+	virtual void setPos(int xPos, int yPos);
+	virtual void setHeading(char heading) { Car::heading = heading; }
+
+
 	std::pair<int, int> getPos();
-	char getHeading() { return heading_; }
-	int getArea() { return area_; }
-	int getFwdSpeed() { return fwdSpeed_; }
-	int getBwdSpeed() { return  bwdSpeed_; }
-	int getTurningRatio() { return  turningRatio_; }
+	char getHeading() const { return heading; }
+	int getArea() const { return area; }
+	int getFwdSpeed() const { return fwdSpeed; }
+	int getBwdSpeed() const { return  bwdSpeed; }
 
-protected:
-	int area_; //Area of Car in simulation
-	int fwdSpeed_; //Number of meters/step forward
-	int bwdSpeed_; //Number of meters/step backwards
-	int turningRatio_; //Degrees turned with a turning command (Currently not implemented)
-	int xPos_, yPos_; //Cars position in room
-	char heading_; //Orientation of the car
+
 };
 
